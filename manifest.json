@@ -1,0 +1,26 @@
+{
+  "name": "GitHug QOTD",
+  "version": "1.0",
+  "description": "Motivational quotes and reminders for those who face imposter syndrome.",
+  "permissions": ["notifications"],
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": true
+  },
+  "page_action": {
+    "default_icon": {
+      "16": "images/githug_16.png",
+      "32": "images/githug_32.png",
+      "48": "images/githug_48.png",
+      "128": "images/githug_128.png"
+    }
+  },
+  "icons": {
+    "16": "images/githug_16.png",
+    "32": "images/githug_32.png",
+    "48": "images/githug_48.png",
+    "128": "images/githug_128.png"
+  },
+  "options_page": "options.html",
+  "manifest_version": 2
+}
