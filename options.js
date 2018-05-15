@@ -1,21 +1,16 @@
-let page = document.getElementById('buttonDiv');
+let onceADay = document.querySelector('.once-a-day');
+let twiceADay = document.querySelector('.twice-a-day');
 
-const kButtonColors = ['#3aa757', '#e8453c', '#f9bb2d', '#4688f1'];
+onceADay.addEventListener('click', function() {
+	// chrome.storage.sync.set({ interval: 1000 * 60 * 60 * 24 }, function() {
+	chrome.storage.sync.set({ interval: 1000 * 3 }, function() {
+		console.log('storage is set to three seconds');
+	});
+});
 
-function constructOptions(kButtonColors) {
-	for (let item of kButtonColors) {
-		let button = document.createElement('button');
-
-		button.style.backgroundColor = item;
-
-		button.addEventListener('click', function() {
-			chrome.storage.sync.set({color: item}, function() {
-				console.log('color is ' + item);
-			})
-		});
-
-		page.appendChild(button);
-	}
-}
-
-constructOptions(kButtonColors);
+twiceADay.onclick = function() {
+	// chrome.storage.sync.set({ interval: 1000 * 60 * 60 * 12 }, function() {
+	chrome.storage.sync.set({ interval: 1000 * 10 }, function() {
+		console.log('storage is set to ten seconds');
+	});
+};

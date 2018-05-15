@@ -1,4 +1,4 @@
-const quotes = ['Trying and failing is better than never starting.', 'You deserve to be where you are.', 'Don\'t be afraid to fail.', 'Keep grinding!', 'bap', 'bim', 'bop', 'fam', 'faz', 'fap'];
+const quotes = ['Trying and failing is better than never starting.', 'You deserve to be where you are.', 'Don\'t be afraid to fail.', 'Keep grinding!', 'Take a break; grab some coffee.', 'bim', 'bop', 'fam', 'faz', 'fap'];
 
 function selectRandomString() {
 	return quotes[Math.floor(Math.random() * quotes.length)];
@@ -21,8 +21,4 @@ chrome.runtime.onInstalled.addListener(function() {
 		// this works!
 		setInterval(createNotification, 3000);
 	}
-
-	chrome.notifications.onClicked.addListener(function() {
-		console.log('clicked');
-	});
 });
