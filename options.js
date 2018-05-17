@@ -1,5 +1,5 @@
 let onceDaily = document.querySelector('.once-daily');
-let twiceDaily = document.querySelector('.twice-daily);
+let twiceDaily = document.querySelector('.twice-daily');
 
 onceDaily.addEventListener('click', function() {
 	chrome.extension.sendRequest({
