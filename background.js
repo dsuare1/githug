@@ -1,5 +1,4 @@
 const quotes = ['Trying and failing is better than never starting.', 'You deserve to be where you are.', 'Don\'t be afraid to fail.', 'Keep grinding!', 'Take a break; grab some coffee.', 'bim', 'bop', 'fam', 'faz', 'fap'];
-let handle;
 
 function selectRandomString() {
 	return quotes[Math.floor(Math.random() * quotes.length)];
@@ -10,8 +9,6 @@ function createNotification() {
 
 	return new Notification(quote);
 }
-
-let interval = 1000 * 3;
 
 chrome.runtime.onInstalled.addListener(function() {
 	if (Notification.permission !== "granted") {
@@ -28,8 +25,31 @@ chrome.runtime.onInstalled.addListener(function() {
 });
 
 chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
-	clearInterval(handle);
-	interval = request.interval;
+	let now = new Date();
 
-	handle = setInterval(createNotification, interval);
+	if (request.time === 'once') {
+		let millisTill1030 = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 10, 30, 0, 0) - now;
+
+		if (millisTill1030 < 0) {
+			millisTill1030 += 86400000;
+		}
+
+		setTimeout(createNotification, millisTill1030);
+	}
+
+	if (request.time === 'twice') {
+		let millisTill1030 = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 10, 30, 0, 0) - now;
+		let millisTill330 = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 15, 30, 0, 0) - now;
+
+		if (millisTill330 < 0) {
+			millisTill330 += 86400000;
+		}
+
+		if (millisTill1030 < 0) {
+			millisTill330 += 86400000;
+		}
+
+		setTimeout(createNotification, millisTill1030);
+		setTimeout(createNotification, millisTill330);
+	}
 });

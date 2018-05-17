@@ -1,24 +1,18 @@
-let onceADay = document.querySelector('.once-a-day');
-let twiceADay = document.querySelector('.twice-a-day');
+let onceDaily = document.querySelector('.once-daily');
+let twiceDaily = document.querySelector('.twice-daily);
 
-onceADay.addEventListener('click', function() {
-	// chrome.storage.sync.set({ interval: 1000 * 60 * 60 * 24 }, function() {
-	// chrome.storage.sync.set({ interval: 1000 * 3 }, function() {
-	console.log('storage is set to five seconds');
-	// });
+onceDaily.addEventListener('click', function() {
 	chrome.extension.sendRequest({
-		interval: 1000 * 5
+		time: 'once'
+	}, function() {
+		// Do nothing
 	});
 });
 
-twiceADay.onclick = function() {
-	// chrome.storage.sync.set({ interval: 1000 * 60 * 60 * 12 }, function() {
-	// chrome.storage.sync.set({ interval: 1000 * 10 }, function() {
-	console.log('storage is set to ten seconds');
-	// });
+twiceDaily.addEventListener('click', function() {
 	chrome.extension.sendRequest({
-		interval: 1000 * 10
+		time: 'twice'
 	}, function() {
-		console.log('request sent');
+		// Do nothing
 	});
-};
+});
