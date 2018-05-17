@@ -2,7 +2,7 @@
   "name": "GitHug QOTD",
   "version": "1.0",
   "description": "Motivational quotes and reminders for those who face imposter syndrome.",
-  "permissions": ["notifications", "storage"],
+  "permissions": ["notifications", "storage", "tabs"],
   "background": {
     "scripts": ["background.js"],
     "persistent": true
