@@ -32,6 +32,45 @@ function createNotification() {
 	return new Notification(quote);
 }
 
+function foo() {
+    let now;
+
+    // check the time every second
+    setInterval(function() {
+        now = Date.now();
+    }, 1000);
+
+    if (localStorage.getItem('frequency') === 'once') {
+        setInterval(function() {
+            let millisTill2325 = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 23, 25, 0, 0) - now;
+
+            if (millisTill2325 < 0) {
+                millisTill2325 += 86400000;
+            }
+
+            setTimeout(createNotification, millisTill2325);
+        }, 1000);
+    }
+
+    if (localStorage.getItem('frequency') === 'twice') {
+        setInterval(function() {
+            let millisTill2325 = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 23, 25, 0, 0) - now;
+            let millisTill2327 = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 23, 27, 0, 0) - now;
+
+            if (millisTill2325 < 0) {
+                millisTill2325 += 86400000;
+            }
+
+            if (millisTill2327 < 0) {
+                millisTill2327 += 86400000;
+            }
+
+            setTimeout(createNotification, millisTill2325);
+            setTimeout(createNotification, millisTill2327);
+        }, 1000);
+    }
+}
+
 // extension lifecycle
 
 // initialization
@@ -45,6 +84,8 @@ chrome.runtime.onInstalled.addListener(function() {
 				// ...open the options page
 				chrome.tabs.create({
 					url: './options.html'
+				}).then(function() {
+					foo();
 				});
 			}
 		});
@@ -52,6 +93,8 @@ chrome.runtime.onInstalled.addListener(function() {
 	    // if a user has already granted permission, open the options page
 		chrome.tabs.create({
 			url: './options.html'
+		}).then(function() {
+			foo();
 		});
 	}
 });
@@ -63,9 +106,28 @@ chrome.runtime.onStartup.addListener(function() {
 	return new Notification(frequency);
 });
 
-chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
-	let now;
+chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
+    console.log('message received');
+    // let now = Date.now();
 
+    if (request.time === 'once') {
+        chrome.alarms.create('once', {
+            delayInMinutes: 0.1,
+            periodInMinutes: 0.1,
+        });
+    }
+});
+
+chrome.alarms.onAlarm.addListener(function(alarm) {
+   createNotification();
+});
+
+
+
+
+
+
+	/*
 	// check the time every second
 	setInterval(function() {
 		now = Date.now();
@@ -98,20 +160,20 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
 
 			// setTimeout(createNotification, millisTill1030);
 			// setTimeout(createNotification, millisTill330);
-			let millisTill1540 = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 15, 40, 0, 0) - now;
-			let millisTill1542 = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 15, 42, 0, 0) - now;
+			let millisTill2325 = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 23, 25, 0, 0) - now;
+			let millisTill2327 = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 23, 27, 0, 0) - now;
 
-			if (millisTill1540 < 0) {
-				millisTill1540 += 86400000;
+			if (millisTill2325 < 0) {
+				millisTill2325 += 86400000;
 			}
 
-			if (millisTill1542 < 0) {
-				millisTill1542 += 86400000;
+			if (millisTill2327 < 0) {
+				millisTill2327 += 86400000;
 			}
 
-			setTimeout(createNotification, millisTill1540);
-			setTimeout(createNotification, millisTill1542);
-		}, 1000 * 60);
-
+			setTimeout(createNotification, millisTill2325);
+			setTimeout(createNotification, millisTill2327);
+		}, 1000);
 	}
 });
+*/

@@ -1,20 +1,16 @@
 let onceDaily = document.querySelector('.once-daily');
 let twiceDaily = document.querySelector('.twice-daily');
 
-onceDaily.addEventListener('click', function() {
-	localStorage.setItem('frequency', 'once');
-	chrome.extension.sendRequest({
-		time: 'once'
-	}, function() {
-		// Do nothing
-	});
-});
+document.addEventListener('DOMContentLoaded', function() {
+    onceDaily.addEventListener('click', function() {
+        chrome.alarms.create('once', {
+            delayInMinutes: 1440, periodInMinutes: 0.2
+        });
+    });
 
-twiceDaily.addEventListener('click', function() {
-	localStorage.setItem('frequency', 'twice');
-	chrome.extension.sendRequest({
-		time: 'twice'
-	}, function() {
-		// Do nothing
-	});
+    twiceDaily.addEventListener('click', function() {
+        chrome.alarms.create('once', {
+            delayInMinutes: 0.1, periodInMinutes: 0.2
+        });
+    });
 });
