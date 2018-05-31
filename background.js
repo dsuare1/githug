@@ -32,20 +32,31 @@ function createNotification() {
 	return new Notification(quote);
 }
 
-chrome.runtime.onInstalled.addListener(function() {
-	if (Notification.permission !== "granted") {
-		Notification.requestPermission();
-	}
+// extension lifecycle
 
+// initialization
+chrome.runtime.onInstalled.addListener(function() {
+	// if a user has not already granted permission
 	if (Notification.permission !== "granted") {
-		Notification.requestPermission();
+		// ask for permission
+		Notification.requestPermission().then(function(permission) {
+			// check the resolved promise value; if granted...
+			if (permission === 'granted') {
+				// ...open the options page
+				chrome.tabs.create({
+					url: './options.html'
+				});
+			}
+		});
 	} else {
+	    // if a user has already granted permission, open the options page
 		chrome.tabs.create({
 			url: './options.html'
 		});
 	}
 });
 
+// listeners
 chrome.runtime.onStartup.addListener(function() {
 	const frequency = localStorage.getItem('frequency');
 
@@ -53,18 +64,23 @@ chrome.runtime.onStartup.addListener(function() {
 });
 
 chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
-	let now = new Date();
+	let now;
+
+	// check the time every second
+	setInterval(function() {
+		now = Date.now();
+	}, 1000);
 
 	if (request.time === 'once') {
 		setInterval(function() {
-			let millisTill1030 = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 10, 30, 0, 0) - now;
+			let millisTill2320 = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 23, 20, 0, 0) - now;
 
-			if (millisTill1030 < 0) {
-				millisTill1030 += 86400000;
+			if (millisTill2320 < 0) {
+				millisTill2320 += 86400000;
 			}
 
-			setTimeout(createNotification, millisTill1030);
-		}, 1000 * 60);
+			setTimeout(createNotification, millisTill2320);
+		}, 1000);
 	}
 
 	if (request.time === 'twice') {
