@@ -47,7 +47,9 @@ chrome.runtime.onInstalled.addListener(function() {
 });
 
 chrome.runtime.onStartup.addListener(function() {
-	return new Notification('browser started');
+	const frequency = localStorage.getItem('frequency');
+
+	return new Notification(frequency);
 });
 
 chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
