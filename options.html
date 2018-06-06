@@ -14,7 +14,19 @@
         }
 
         .copyright {
-            margin-top: 15rem;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+        }
+
+        #check-mark-container {
+            display: none;
+            margin: 2.5rem 0;
+        }
+
+        .fa-check-circle-o {
+            font-size: 3.5rem;
+            color: #28a745;
         }
     </style>
 </head>
@@ -31,6 +43,10 @@
                     </div>
                     <div class="col-md-6 text-center mt-3">
                         <button class="btn btn-success twice">Twice a Day</button><p class="mt-3">(QOTD will pop up at 10:30am and 3:30pm)</p>
+                    </div>
+                    <div class="col-md-12 text-center" id="check-mark-container">
+                        <h5>Got it!</h5>
+                        <i class="fa fa-check-circle-o" aria-hidden="true"></i>
                     </div>
                     <div class="col-md-12 text-center copyright">
                         <p>Copyright &copy; Derrick Suarez 2018</p>
